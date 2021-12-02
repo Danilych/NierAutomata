@@ -5,11 +5,11 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "מכהמכהמהכ!\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+// Debug program: Fכהמלכהגאמכלהמ Start Debugging menu
 
 // Tips for Getting Started: 
 //   1. Use the Solution Explorer window to add/manage files
