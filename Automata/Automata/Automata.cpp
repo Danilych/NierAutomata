@@ -6,7 +6,7 @@
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    std::cout << "ïîãäîsdgsdgsèsss!!!!\n";
+    std::cout << "Êîñòèê\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
