@@ -1,21 +1,30 @@
-// Automata.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <fstream>
 
-int main()
+#include<string>
+#include "LexAnalyzer.h"
+
+
+int main()     
 {
-    setlocale(LC_ALL, "Russian");
-    std::cout << "Пуджик\n";
+    std::string file_name;
+    std::string file_text;
+
+    std::cout << "Enter file with program: ";
+    std::cin >> file_name;
+
+    std::ifstream Opened_file = std::ifstream(file_name);
+    std::getline(Opened_file, file_text, '\0');
+
+    std::cout << "Trying to run " + file_name << std::endl;
+
+    try
+    {
+        LexAnalyzer MyAnalyzer(file_text);
+        MyAnalyzer.Start();
+    }
+    catch (const std::exception& excep)
+    {
+        std::cerr << excep.what() << std::endl;
+    }
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: Fлдомлдваолмдо Start Debugging menu комментарий!
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
