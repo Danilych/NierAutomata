@@ -55,7 +55,7 @@ struct LexemeInfo
 class LexAnalyzer {
 
 private:
-	LexemeInfo NextLexeme();
+	LexemeInfo LookForNextLexeme();
 	bool IsChar(char ch);
 
 	std::string program_text;
@@ -64,7 +64,6 @@ private:
 	std::vector<LexemeInfo> lexems_data;
 	
 public:
-	void Start();
 	std::vector<LexemeInfo> GetLexemesData();
 	LexAnalyzer(const std::string&);
 };

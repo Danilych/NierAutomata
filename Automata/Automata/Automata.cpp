@@ -21,7 +21,16 @@ int main()
     try
     {
         LexAnalyzer MyAnalyzer(file_text);
-        MyAnalyzer.Start();
+        std::vector<LexemeInfo> LexemesBuffer =  MyAnalyzer.GetLexemesData();
+
+        
+        std::cout << std::endl <<"Your lexemes: \n\n";
+
+        //for (auto& Lexeme : LexemesBuffer) // access by reference to avoid copying
+        //{
+        //    if(Lexeme.lex_type == LexemeType::Finish) std::cout <<"Finish" << std::endl;
+        //    else std::cout << Lexeme.lex_value << std::endl;
+        //}
     }
     catch (const std::exception& excep)
     {
