@@ -1,7 +1,5 @@
-const string msg = "PSHOD";
-float raz = 0.105;
-msg = "Podpishis'";
-for(int i = 10; i >= 0; i = i - 1)
-{
-write(i);
-}
+const float azaz = 5;
+int n;
+n = 10 * ( 2 + 2 );
+write(n);
+write(azaz);

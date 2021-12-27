@@ -17,6 +17,7 @@ void OpsGenerator::GrammNonterminal()
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
+                break;
             }
             case LexemeType::IntType:
             {
@@ -159,7 +160,7 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(LexemeType::Semicolon);
                 magazine.emplace(Nonterminal::C);
                 magazine.emplace(LexemeType::Semicolon);
-                magazine.emplace(Nonterminal::C);
+                magazine.emplace(Nonterminal::P);
                 magazine.emplace(LexemeType::LeftRoundBracket);
                 magazine.emplace(LexemeType::For);
 
@@ -237,7 +238,7 @@ void OpsGenerator::GrammNonterminal()
             }
             default:
             {
-                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                std::string errormsg = "Ops Generator error S - Unexpected lexeme;";
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
             }
@@ -267,7 +268,7 @@ void OpsGenerator::GrammNonterminal()
             }
             default:
             {
-                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                std::string errormsg = "Ops Generator error G - Unexpected lexeme;";
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
             }
@@ -307,7 +308,7 @@ void OpsGenerator::GrammNonterminal()
 
             default:
             {
-                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                std::string errormsg = "Ops Generator error O - Unexpected lexeme;";
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
             }
@@ -379,7 +380,7 @@ void OpsGenerator::GrammNonterminal()
                     magazine.emplace(LexemeType::Semicolon);
                     magazine.emplace(Nonterminal::C);
                     magazine.emplace(LexemeType::Semicolon);
-                    magazine.emplace(Nonterminal::C);
+                    magazine.emplace(Nonterminal::P);
                     magazine.emplace(LexemeType::LeftRoundBracket);
                     magazine.emplace(LexemeType::For);
 
@@ -554,7 +555,7 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(LexemeType::Semicolon);
                 magazine.emplace(Nonterminal::C);
                 magazine.emplace(LexemeType::Semicolon);
-                magazine.emplace(Nonterminal::C);
+                magazine.emplace(Nonterminal::P);
                 magazine.emplace(LexemeType::LeftRoundBracket);
                 magazine.emplace(LexemeType::For);
 
@@ -656,69 +657,801 @@ void OpsGenerator::GrammNonterminal()
             }
             default:
             {
-                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                std::string errormsg = "Ops Generator error A - Unexpected lexeme;";
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
             }
             break;
         }
-        case Nonterminal::Y: {
+        case Nonterminal::Y: 
+        {
             switch (current_lexeme.lex_type)
             {
-            case LexemeType::VarName: {
-                if (current_table == vartable::String)
-                {
-                    magazine.emplace(LexemeType::VarName);
+            case LexemeType::VarName: 
+            {
+                magazine.emplace(LexemeType::VarName);
 
-                    generator.emplace(GeneratorTask::VariableId);
-                    break;
-                }
+                generator.emplace(GeneratorTask::VariableId);
+                break;
             }
-            case LexemeType::Const: {
-                break
+            case LexemeType::StringVal:
+            {
+                magazine.emplace(LexemeType::StringVal);
+
+                generator.emplace(GeneratorTask::StringVal);
+                break;
             }
             default:
             {
-                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                std::string errormsg = "Ops Generator error Y - Unexpected lexeme;";
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
             }
             break;
         }
-
-        case Nonterminal::Y:
-
         case Nonterminal::B:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                if (current_table == vartable::String)
+                {
+                    magazine.emplace(Nonterminal::D);
+                    magazine.emplace(LexemeType::StringVal);
+                    magazine.emplace(LexemeType::Assign);
+                    magazine.emplace(LexemeType::VarName);
 
+                    generator.emplace(GeneratorTask::Assign);
+                    generator.emplace(GeneratorTask::StringVal);  
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task11);
+                    break;
+                }
+                else if(current_table == vartable::Int)
+                {
+                    magazine.emplace(Nonterminal::D);
+                    magazine.emplace(LexemeType::IntNum);
+                    magazine.emplace(LexemeType::Assign);
+                    magazine.emplace(LexemeType::VarName);
+
+                    generator.emplace(GeneratorTask::Assign);
+                    generator.emplace(GeneratorTask::IntNumber);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task11);
+                    break;
+                }
+                else if (current_table == vartable::Float)
+                {
+                    magazine.emplace(Nonterminal::D);
+                    magazine.emplace(LexemeType::FloatNum);
+                    magazine.emplace(LexemeType::Assign);
+                    magazine.emplace(LexemeType::VarName);
+
+                    generator.emplace(GeneratorTask::Assign);
+                    generator.emplace(GeneratorTask::FloatNumber);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task11);
+                    break;
+                }
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error B - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::D:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::Semicolon:
+            {
+                magazine.emplace(LexemeType::Semicolon);
 
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Comma:
+            {
+                magazine.emplace(Nonterminal::B);
+                magazine.emplace(LexemeType::Comma);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error D - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::P:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::Assign);
+                magazine.emplace(LexemeType::VarName);
 
+                generator.emplace(GeneratorTask::Assign);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error P - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::I:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::M);
+                magazine.emplace(LexemeType::VarName);
 
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task6);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error I - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::M:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::Semicolon:
+            {
+                magazine.emplace(LexemeType::Semicolon);
 
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Comma:
+            {
+                magazine.emplace(Nonterminal::M);
+                magazine.emplace(LexemeType::VarName);
+                magazine.emplace(LexemeType::Comma);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task6);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error M - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::J:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::N);
+                magazine.emplace(LexemeType::RightSquareBracket);
+                magazine.emplace(LexemeType::IntNum);
+                magazine.emplace(LexemeType::LeftSquareBracket);
+                magazine.emplace(LexemeType::VarName);
 
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task6);
+                generator.emplace(GeneratorTask::Task10);
+                generator.emplace(GeneratorTask::IntNumber);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error J - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::N:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::Comma:
+            {
+                magazine.emplace(Nonterminal::N);
+                magazine.emplace(LexemeType::RightSquareBracket);
+                magazine.emplace(LexemeType::IntNum);
+                magazine.emplace(LexemeType::LeftSquareBracket);
+                magazine.emplace(LexemeType::VarName);
+                magazine.emplace(LexemeType::Comma);
 
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task6);
+                generator.emplace(GeneratorTask::Task10);
+                generator.emplace(GeneratorTask::IntNumber);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error N - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::H:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::LeftSquareBracket:
+            {
+                magazine.emplace(LexemeType::RightSquareBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::LeftSquareBracket);
 
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            }
+            break;
+        }
         case Nonterminal::C:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::L);
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::H);
+                magazine.emplace(LexemeType::VarName);
 
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                break;
+            }
+            case LexemeType::Plus:
+            {
+                magazine.emplace(Nonterminal::L);
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Plus);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Minus:
+            {
+                magazine.emplace(Nonterminal::L);
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Minus);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::UnarMinus);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::IntNum:
+            {
+                magazine.emplace(Nonterminal::L);
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::IntNum);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::IntNumber);
+                break;
+            }
+            case LexemeType::FloatNum:
+            {
+                magazine.emplace(Nonterminal::L);
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::FloatNum);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::FloatNumber);
+                break;
+            }
+            case LexemeType::LeftRoundBracket:
+            {
+                magazine.emplace(Nonterminal::L);
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::RightRoundBracket);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error C - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::L:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::LessOrEqual:
+            {
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::LessOrEqual);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::LessOrEqual);
+                break;
+            }
+            case LexemeType::MoreOrEqual:
+            {
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::MoreOrEqual);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::MoreOrEqual);
+                break;
+            }
+            case LexemeType::Equal:
+            {
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::Equal);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Equal);
+                break;
+            }
+            case LexemeType::Less:
+            {
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::Less);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Less);
+                break;
+            }
+            case LexemeType::More:
+            {
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::More);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::More);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error L - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::K:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::Else:
+            {
+                magazine.emplace(LexemeType::RightBrace);
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(LexemeType::LeftBrace);
+                magazine.emplace(LexemeType::Else);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task2);
+                break;
+            }
+            }
+            break;
+        }
         case Nonterminal::E:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::H);
+                magazine.emplace(LexemeType::VarName);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                break;
+            }
+            case LexemeType::Plus:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Plus);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Minus:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Minus);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::UnarMinus);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::IntNum:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::IntNum);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::IntNumber);
+                break;
+            }
+            case LexemeType::FloatNum:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::FloatNum);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::FloatNumber);
+                break;
+            }
+            case LexemeType::LeftRoundBracket:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::RightRoundBracket);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error E - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::U:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::Plus:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::T);
+                magazine.emplace(LexemeType::Plus);
+
+                generator.emplace(GeneratorTask::Plus);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Minus:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::T);
+                magazine.emplace(LexemeType::Minus);
+
+                generator.emplace(GeneratorTask::Minus);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            }
+            break;
+        }
         case Nonterminal::T:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::H);
+                magazine.emplace(LexemeType::VarName);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                break;
+            }
+            case LexemeType::Plus:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Plus);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Minus:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Minus);
+
+                generator.emplace(GeneratorTask::UnarMinus);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::IntNum:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::IntNum);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::IntNumber);
+                break;
+            }
+            case LexemeType::FloatNum:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::FloatNum);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::FloatNumber);
+                break;
+            }
+            case LexemeType::LeftRoundBracket:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::RightRoundBracket);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error T - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::V:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::Divide:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::R);
+                magazine.emplace(LexemeType::Divide);
+
+                generator.emplace(GeneratorTask::Divide);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Multiply:
+            {
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(Nonterminal::R);
+                magazine.emplace(LexemeType::Multiply);
+
+                generator.emplace(GeneratorTask::Multiply);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            }
+            break;
+        }
         case Nonterminal::R:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::H);
+                magazine.emplace(LexemeType::VarName);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                break;
+            }
+            case LexemeType::Plus:
+            {
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Plus);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Minus:
+            {
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::F);
+                magazine.emplace(LexemeType::Minus);
+
+                generator.emplace(GeneratorTask::UnarMinus);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::IntNum:
+            {
+                magazine.emplace(LexemeType::IntNum);
+
+                generator.emplace(GeneratorTask::IntNumber);
+                break;
+            }
+            case LexemeType::FloatNum:
+            {
+                magazine.emplace(LexemeType::FloatNum);
+
+                generator.emplace(GeneratorTask::FloatNumber);
+                break;
+            }
+            case LexemeType::LeftRoundBracket:
+            {
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error R - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
         case Nonterminal::F:
-        case Nonterminal::Z:
+        {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName:
+            {
+                magazine.emplace(Nonterminal::H);
+                magazine.emplace(LexemeType::VarName);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                break;
+            }
+            case LexemeType::IntNum:
+            {
+                magazine.emplace(LexemeType::IntNum);
+
+                generator.emplace(GeneratorTask::IntNumber);
+                break;
+            }
+            case LexemeType::FloatNum:
+            {
+                magazine.emplace(LexemeType::FloatNum);
+
+                generator.emplace(GeneratorTask::FloatNumber);
+                break;
+            }
+            case LexemeType::StringVal:
+            {
+                magazine.emplace(LexemeType::StringVal);
+
+                generator.emplace(GeneratorTask::StringVal);
+                break;
+            }
+            case LexemeType::LeftRoundBracket:
+            {
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::RightRoundBracket);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error F - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
+            break;
+        }
+        case Nonterminal::Z: break;
         case Nonterminal::Error:
         default:
-            string msg = "Generator error; Error or unknown state;";
-            throw InterpretException(msg, current_lexeme.info);
+            std::string errormsg = "Ops Generator error Error - Error or unknown state;";
+            throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
     }
 }
 
@@ -894,6 +1627,7 @@ void OpsGenerator::DoTask()
                     throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
                 }
             }
+            break;
         }
         case vartable::Float:
         {
@@ -929,6 +1663,7 @@ void OpsGenerator::DoTask()
                     throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
                 }
             }
+            break;
         }
         case vartable::String:
         {
@@ -964,8 +1699,10 @@ void OpsGenerator::DoTask()
                     throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
                 }
             }
+            break;
         }
         }
+        break;
     }
     case GeneratorTask::Task7: //int
     {
@@ -994,10 +1731,147 @@ void OpsGenerator::DoTask()
     }
     case GeneratorTask::Task11: //const
     {
-       // current_table = vartable::Int;
+        ///////////////////////////////
+        std::string var_name = current_lexeme.lex_value;
         is_constant = true;
-        // current_table = table::MassInt;
+        switch (current_table)
+        {
+        case vartable::Int:
+        {
+
+            if (is_constant && is_array)
+            {
+                std::string errormsg = "Ops Generator error - Constant can't be an array = '" + var_name + "';";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            else
+            {
+                if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
+                {
+                    if (is_constant)
+                    {
+                        interdata.int_table.insert({ var_name, 0 });
+                        interdata.constid_table.push_back(var_name);
+                        names_table.push_back(var_name);
+                    }
+                    else if (is_array)
+                    {
+                        interdata.massInt_table.insert({ var_name, std::vector<int>(0) });
+                        names_table.push_back(var_name);
+                    }
+                    else
+                    {
+                        interdata.int_table.insert({ var_name, 0 });
+                        names_table.push_back(var_name);
+                    }
+                }
+                else
+                {
+                    std::string errormsg = "Ops Generator error - Redefine a variable name = '" + var_name + "';";
+                    throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+                }
+            }
+            break;
+        }
+        case vartable::Float:
+        {
+            if (is_constant && is_array)
+            {
+                std::string errormsg = "Ops Generator error - Constant can't be an array = '" + var_name + "';";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            else
+            {
+                if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
+                {
+                    if (is_constant)
+                    {
+                        interdata.float_table.insert({ var_name, 0 });
+                        interdata.constid_table.push_back(var_name);
+                        names_table.push_back(var_name);
+                    }
+                    else if (is_array)
+                    {
+                        interdata.massFloat_table.insert({ var_name, std::vector<float>(0) });
+                        names_table.push_back(var_name);
+                    }
+                    else
+                    {
+                        interdata.float_table.insert({ var_name, 0 });
+                        names_table.push_back(var_name);
+                    }
+                }
+                else
+                {
+                    std::string errormsg = "Ops Generator error - Redefine a variable name = '" + var_name + "';";
+                    throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+                }
+            }
+            break;
+        }
+        case vartable::String:
+        {
+            if (is_constant && is_array)
+            {
+                std::string errormsg = "Ops Generator error - Constant can't be an array = '" + var_name + "';";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            else
+            {
+                if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
+                {
+                    if (is_constant)
+                    {
+                        interdata.string_table.insert({ var_name, "" });
+                        interdata.constid_table.push_back(var_name);
+                        names_table.push_back(var_name);
+                    }
+                    else if (is_array)
+                    {
+                        std::string errormsg = "Ops Generator error - String can't be an array = '" + var_name + "';";
+                        throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+                    }
+                    else
+                    {
+                        interdata.string_table.insert({ var_name, "" });
+                        names_table.push_back(var_name);
+                    }
+                }
+                else
+                {
+                    std::string errormsg = "Ops Generator error - Redefine a variable name = '" + var_name + "';";
+                    throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+                }
+            }
+            break;
+        }
+        }
+        
+        if (interdata.int_table.count(var_name) ||
+            interdata.massInt_table.count(var_name))
+        {
+            interdata.ops_item.emplace_back(var_name, OpsItemType::IntVar, current_lexeme.lex_debuginfo);
+        }
+        else if (interdata.float_table.count(var_name) ||
+            interdata.massFloat_table.count(var_name))
+        {
+            interdata.ops_item.emplace_back(var_name, OpsItemType::FloatVar, current_lexeme.lex_debuginfo);
+        }
+        else if (interdata.string_table.count(var_name))
+        {
+            interdata.ops_item.emplace_back(var_name, OpsItemType::StringVar, current_lexeme.lex_debuginfo);
+        }
+        else
+        {
+            std::string errormsg = "OpsGenerator error - Unknown variable name = '" + var_name + "';";
+            throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+        }
         break;
+
+       // current_table = vartable::Int;
+        //is_constant = true;
+        // current_table = table::MassInt;
+        //break;
     }
     case GeneratorTask::Memory:
     {
@@ -1010,8 +1884,6 @@ void OpsGenerator::DoTask()
     }
     }
 }
-
-
 
 OpsGenerator::OpsGenerator(std::vector<LexemeInfo> input)
 {
@@ -1045,7 +1917,7 @@ InterData OpsGenerator::GetOpsData()
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
 
-            if (current_mag_item.lex_type == current_lexeme.lex_type)
+            if (current_mag_item.lexeme_type == current_lexeme.lex_type)
             {
                 if (current_lexeme.lex_type == LexemeType::Semicolon)
                 {
@@ -1054,9 +1926,14 @@ InterData OpsGenerator::GetOpsData()
                 }
                 current_lexeme = input_lexemes[++current_lexeme_id];
             }
+            else if (current_mag_item.lexeme_type == LexemeType::FloatNum && current_lexeme.lex_type == LexemeType::IntNum)
+            {
+                current_lexeme = input_lexemes[++current_lexeme_id];
+            }
             else
             {
-                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+
+                std::string errormsg = "Ops Generator error Main - Unexpected lexeme;";
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
         }
