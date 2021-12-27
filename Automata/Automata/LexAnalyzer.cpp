@@ -25,6 +25,7 @@ std::vector<LexemeInfo> LexAnalyzer::GetLexemesData()
 				++current_debuginfo.debug_line;
 			}
 			else ++current_debuginfo.debug_position;
+			continue;
 		}
 
 		current_lexeme = LookForNextLexeme();
