@@ -4,979 +4,721 @@ void OpsGenerator::GrammNonterminal()
 {
     switch (current_nonterminal)
     {
-    case Nonterminal::S:
-    {
-        switch (current_lexeme.lex_type)
+        case Nonterminal::S:
         {
-        case LexemeType::Const:
-        {
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(Nonterminal::O);
-            magazine.emplace(LexemeType::Const);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-        }
-        case LexemeType::IntType:
-        {
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(Nonterminal::I);
-            magazine.emplace(LexemeType::IntType);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task7);
-            break;
-        }
-        case LexemeType::FloatType:
-        {
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(Nonterminal::I);
-            magazine.emplace(LexemeType::FloatType);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task8);
-            break;
-        }
-        case LexemeType::StringType:
-        {
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(Nonterminal::I);
-            magazine.emplace(LexemeType::StringType);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task9);
-            break;
-        }
-        case LexemeType::Array:
-        {
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(LexemeType::Array);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task10);
-            break;
-        }
-        case LexemeType::VarName:
-        {
-            if(current_table == vartable::String)
+            switch (current_lexeme.lex_type)
             {
-                magazine.emplace(Nonterminal::Q);
-                magazine.emplace(LexemeType::Semicolon);
-                magazine.emplace(Nonterminal::Y);
-                magazine.emplace(LexemeType::Assign);
-                magazine.emplace(LexemeType::VarName);
+            case LexemeType::Const:
+            {
+                magazine.emplace(Nonterminal::S);
+                magazine.emplace(Nonterminal::O);
+                magazine.emplace(LexemeType::Const);
 
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Assign);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::VariableId);
+            }
+            case LexemeType::IntType:
+            {
+                magazine.emplace(Nonterminal::S);
+                magazine.emplace(Nonterminal::I);
+                magazine.emplace(LexemeType::IntType);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task7);
                 break;
             }
-            else
+            case LexemeType::FloatType:
+            {
+                magazine.emplace(Nonterminal::S);
+                magazine.emplace(Nonterminal::I);
+                magazine.emplace(LexemeType::FloatType);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task8);
+                break;
+            }
+            case LexemeType::StringType:
+            {
+                magazine.emplace(Nonterminal::S);
+                magazine.emplace(Nonterminal::I);
+                magazine.emplace(LexemeType::StringType);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task9);
+                break;
+            }
+            case LexemeType::Array:
+            {
+                magazine.emplace(Nonterminal::S);
+                magazine.emplace(Nonterminal::G);
+                magazine.emplace(LexemeType::Array);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task10);
+                break;
+            }
+            case LexemeType::VarName:
+            {
+                if(current_table == vartable::String)
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(Nonterminal::Y);
+                    magazine.emplace(LexemeType::Assign);
+                    magazine.emplace(LexemeType::VarName);
+
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Assign);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::VariableId);
+                    break;
+                }
+                else
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(Nonterminal::E);
+                    magazine.emplace(LexemeType::Assign);
+                    magazine.emplace(Nonterminal::H);
+                    magazine.emplace(LexemeType::VarName);
+
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Assign);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::VariableId);
+                    break;
+                }
+            }
+            case LexemeType::If:
+            {
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::K);
+                magazine.emplace(LexemeType::RightBrace);
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(Nonterminal::A);
+                magazine.emplace(LexemeType::LeftBrace);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::If);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task3);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task1);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::While:
+            {
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(LexemeType::RightBrace);
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(Nonterminal::A);
+                magazine.emplace(LexemeType::LeftBrace);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::While);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task5);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task1);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task4);
+                break;
+            }
+            case LexemeType::For:
+            {
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(LexemeType::RightBrace);
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(Nonterminal::A);
+                magazine.emplace(LexemeType::LeftBrace);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::P);
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::For);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task5);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task1);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task4);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Read:
             {
                 magazine.emplace(Nonterminal::Q);
                 magazine.emplace(LexemeType::Semicolon);
-                magazine.emplace(Nonterminal::E);
-                magazine.emplace(LexemeType::Assign);
+                magazine.emplace(LexemeType::RightRoundBracket);
                 magazine.emplace(Nonterminal::H);
                 magazine.emplace(LexemeType::VarName);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::Read);
 
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Assign);
                 generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Read);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Write:
+            {
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::Write);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Write);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Resize:
+            {
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::Comma);
+                magazine.emplace(LexemeType::VarName);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::Resize);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Memory);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::VariableId);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
                 break;
             }
-        }
-        case LexemeType::If:
-        {
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::K);
-            magazine.emplace(LexemeType::RightBrace);
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(Nonterminal::A);
-            magazine.emplace(LexemeType::LeftBrace);
-            magazine.emplace(LexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::C);
-            magazine.emplace(LexemeType::LeftRoundBracket);
-            magazine.emplace(LexemeType::If);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task3);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task1);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
+            default:
+            {
+                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
             break;
         }
-        case LexemeType::While:
+        case Nonterminal::G:
         {
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(LexemeType::RightBrace);
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(Nonterminal::A);
-            magazine.emplace(LexemeType::LeftBrace);
-            magazine.emplace(LexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::C);
-            magazine.emplace(LexemeType::LeftRoundBracket);
-            magazine.emplace(LexemeType::While);
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::IntType:
+            {
+                magazine.emplace(Nonterminal::J);
+                magazine.emplace(LexemeType::IntType);
 
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task5);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task1);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task4);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task7);
+                break;
+            }
+            case LexemeType::FloatType:
+            {
+                magazine.emplace(Nonterminal::J);
+                magazine.emplace(LexemeType::FloatType);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task8);
+                break;
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
             break;
         }
-        case LexemeType::For:
+        case Nonterminal::O:
         {
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(LexemeType::RightBrace);
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(Nonterminal::A);
-            magazine.emplace(LexemeType::LeftBrace);
-            magazine.emplace(LexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::P);
-            magazine.emplace(LexemeType::Semicolon);
-            magazine.emplace(Nonterminal::C);
-            magazine.emplace(LexemeType::Semicolon);
-            magazine.emplace(Nonterminal::C);
-            magazine.emplace(LexemeType::LeftRoundBracket);
-            magazine.emplace(LexemeType::For);
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::IntType:
+            {
+                magazine.emplace(Nonterminal::B);
+                magazine.emplace(LexemeType::IntType);
 
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task5);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task1);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task4);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task7);
+                break;
+            }
+            case LexemeType::FloatType:
+            {
+                magazine.emplace(Nonterminal::B);
+                magazine.emplace(LexemeType::FloatType);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task8);
+                break;
+            }
+            case LexemeType::StringType:
+            {
+                magazine.emplace(Nonterminal::B);
+                magazine.emplace(LexemeType::StringType);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task9);
+                break;
+            }
+
+            default:
+            {
+                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
             break;
         }
-        case LexemeType::Read:
+        case Nonterminal::Q:
         {
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(LexemeType::Semicolon);
-            magazine.emplace(LexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(LexemeType::VarName);
-            magazine.emplace(LexemeType::LeftRoundBracket);
-            magazine.emplace(LexemeType::Read);
+            switch (current_lexeme.lex_type)
+            {
+                case LexemeType::While:
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(LexemeType::RightBrace);
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(Nonterminal::A);
+                    magazine.emplace(LexemeType::LeftBrace);
+                    magazine.emplace(LexemeType::RightRoundBracket);
+                    magazine.emplace(Nonterminal::C);
+                    magazine.emplace(LexemeType::LeftRoundBracket);
+                    magazine.emplace(LexemeType::While);
 
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Read);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task5);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task1);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task4);
+                    break;
+                }
+                case LexemeType::If:
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(Nonterminal::Z);
+                    magazine.emplace(Nonterminal::K);
+                    magazine.emplace(LexemeType::RightBrace);
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(Nonterminal::A);
+                    magazine.emplace(LexemeType::LeftBrace);
+                    magazine.emplace(LexemeType::RightRoundBracket);
+                    magazine.emplace(Nonterminal::C);
+                    magazine.emplace(LexemeType::LeftRoundBracket);
+                    magazine.emplace(LexemeType::If);
+
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task3);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task1);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    break;
+                }
+                case LexemeType::For:
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(LexemeType::RightBrace);
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(Nonterminal::A);
+                    magazine.emplace(LexemeType::LeftBrace);
+                    magazine.emplace(LexemeType::RightRoundBracket);
+                    magazine.emplace(Nonterminal::P);
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(Nonterminal::C);
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(Nonterminal::C);
+                    magazine.emplace(LexemeType::LeftRoundBracket);
+                    magazine.emplace(LexemeType::For);
+
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task5);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task1);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Task4);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    break;
+                }
+                case LexemeType::Read:
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(LexemeType::RightRoundBracket);
+                    magazine.emplace(Nonterminal::H);
+                    magazine.emplace(LexemeType::VarName);
+                    magazine.emplace(LexemeType::LeftRoundBracket);
+                    magazine.emplace(LexemeType::Read);
+
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Read);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::VariableId);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    break;
+                }
+                case LexemeType::Write:
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(LexemeType::RightRoundBracket);
+                    magazine.emplace(Nonterminal::E);
+                    magazine.emplace(LexemeType::LeftRoundBracket);
+                    magazine.emplace(LexemeType::Write);
+
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Write);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    break;
+                }
+                case LexemeType::Resize:
+                {
+                    magazine.emplace(Nonterminal::Q);
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(LexemeType::RightRoundBracket);
+                    magazine.emplace(Nonterminal::E);
+                    magazine.emplace(LexemeType::Comma);
+                    magazine.emplace(LexemeType::VarName);
+                    magazine.emplace(LexemeType::LeftRoundBracket);
+                    magazine.emplace(LexemeType::Resize);
+
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Memory);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::VariableId);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    break;
+                }
+                case LexemeType::VarName:
+                {
+                    if (current_table == vartable::String)
+                    {
+                        magazine.emplace(Nonterminal::Q);
+                        magazine.emplace(LexemeType::Semicolon);
+                        magazine.emplace(Nonterminal::Y);
+                        magazine.emplace(LexemeType::Assign);
+                        magazine.emplace(LexemeType::VarName);
+
+                        generator.emplace(GeneratorTask::Empty);
+                        generator.emplace(GeneratorTask::Assign);
+                        generator.emplace(GeneratorTask::Empty);
+                        generator.emplace(GeneratorTask::Empty);
+                        generator.emplace(GeneratorTask::VariableId);
+                        break;
+                    }
+                    else
+                    {
+                        magazine.emplace(Nonterminal::Q);
+                        magazine.emplace(LexemeType::Semicolon);
+                        magazine.emplace(Nonterminal::E);
+                        magazine.emplace(LexemeType::Assign);
+                        magazine.emplace(Nonterminal::H);
+                        magazine.emplace(LexemeType::VarName);
+
+                        generator.emplace(GeneratorTask::Empty);
+                        generator.emplace(GeneratorTask::Assign);
+                        generator.emplace(GeneratorTask::Empty);
+                        generator.emplace(GeneratorTask::Empty);
+                        generator.emplace(GeneratorTask::Empty);
+                        generator.emplace(GeneratorTask::VariableId);
+                        break;
+                    }
+                }
+            }
             break;
         }
-        case LexemeType::Write:
+        case Nonterminal::A:
         {
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(LexemeType::Semicolon);
-            magazine.emplace(LexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(LexemeType::LeftRoundBracket);
-            magazine.emplace(LexemeType::Write);
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::While:
+            {
+                magazine.emplace(LexemeType::RightBrace);
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(Nonterminal::A);
+                magazine.emplace(LexemeType::LeftBrace);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::While);
 
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Write);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task5);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task1);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task4);
+                break;
+            }
+            case LexemeType::If:
+            {
+                magazine.emplace(Nonterminal::Z);
+                magazine.emplace(Nonterminal::K);
+                magazine.emplace(LexemeType::RightBrace);
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(Nonterminal::A);
+                magazine.emplace(LexemeType::LeftBrace);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::If);
+
+                generator.emplace(GeneratorTask::Task3);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task1);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::For:
+            {
+                magazine.emplace(LexemeType::RightBrace);
+                magazine.emplace(Nonterminal::Q);
+                magazine.emplace(Nonterminal::A);
+                magazine.emplace(LexemeType::LeftBrace);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::P);
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(Nonterminal::C);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::For);
+
+                generator.emplace(GeneratorTask::Task5);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task1);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task4);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Read:
+            {
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::H);
+                magazine.emplace(LexemeType::VarName);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::Read);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Read);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Write:
+            {
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::Write);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Write);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Resize:
+            {
+                magazine.emplace(LexemeType::Semicolon);
+                magazine.emplace(LexemeType::RightRoundBracket);
+                magazine.emplace(Nonterminal::E);
+                magazine.emplace(LexemeType::Comma);
+                magazine.emplace(LexemeType::VarName);
+                magazine.emplace(LexemeType::LeftRoundBracket);
+                magazine.emplace(LexemeType::Resize);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Memory);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::VariableId);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::VarName:
+            {
+                if (current_table == vartable::String)
+                {
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(Nonterminal::Y);
+                    magazine.emplace(LexemeType::Assign);
+                    magazine.emplace(LexemeType::VarName);
+
+                    generator.emplace(GeneratorTask::Assign);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::VariableId);
+                    break;
+                }
+                else
+                {
+                    magazine.emplace(LexemeType::Semicolon);
+                    magazine.emplace(Nonterminal::E);
+                    magazine.emplace(LexemeType::Assign);
+                    magazine.emplace(Nonterminal::H);
+                    magazine.emplace(LexemeType::VarName);
+
+                    generator.emplace(GeneratorTask::Assign);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::VariableId);
+                    break;
+                }
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
             break;
         }
-        case LexemeType::Resize:
-        {
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(LexemeType::Semicolon);
-            magazine.emplace(LexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(LexemeType::Comma);
-            magazine.emplace(LexemeType::VarName);
-            magazine.emplace(LexemeType::LeftRoundBracket);
-            magazine.emplace(LexemeType::Resize);
+        case Nonterminal::Y: {
+            switch (current_lexeme.lex_type)
+            {
+            case LexemeType::VarName: {
+                if (current_table == vartable::String)
+                {
+                    magazine.emplace(LexemeType::VarName);
 
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Memory);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
+                    generator.emplace(GeneratorTask::VariableId);
+                    break;
+                }
+            }
+            case LexemeType::Const: {
+                break
+            }
+            default:
+            {
+                std::string errormsg = "Ops Generator error - Unexpected lexeme;";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            }
             break;
         }
+
+        case Nonterminal::Y:
+
+        case Nonterminal::B:
+
+        case Nonterminal::D:
+
+        case Nonterminal::P:
+
+        case Nonterminal::I:
+
+        case Nonterminal::M:
+
+        case Nonterminal::J:
+
+        case Nonterminal::N:
+
+        case Nonterminal::H:
+
+        case Nonterminal::C:
+
+        case Nonterminal::L:
+        case Nonterminal::K:
+        case Nonterminal::E:
+        case Nonterminal::U:
+        case Nonterminal::T:
+        case Nonterminal::V:
+        case Nonterminal::R:
+        case Nonterminal::F:
+        case Nonterminal::Z:
+        case Nonterminal::Error:
         default:
-        {
-            std::string errormsg = "Ops Generator error - Unexpected lexeme;";
-            throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
-        }
-        }
-        break;
-    }
-    case Nonterminal::G:
-    {
-        switch (current_lexeme.lex_type)
-        {
-        case LexemeType::IntType:
-        {
-            magazine.emplace(Nonterminal::J);
-            magazine.emplace(LexemeType::IntType);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task7);
-            break;
-        }
-        case LexemeType::FloatType:
-        {
-            magazine.emplace(Nonterminal::J);
-            magazine.emplace(LexemeType::FloatType);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task8);
-            break;
-        }
-        default:
-        {
-            std::string errormsg = "Ops Generator error - Unexpected lexeme;";
-            throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
-        }
-        }
-        break;
-    }
-    case Nonterminal::A:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::VarName:
-        {
-            magazine.emplace(lexemeType::Semicolon);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::Assign);
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(lexemeType::VarName);
-
-            generator.emplace(GeneratorTask::Assign);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            break;
-        }
-        case lexemeType::If:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::K);
-            magazine.emplace(lexemeType::RightBrace);
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(lexemeType::LeftBrace);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::C);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-            magazine.emplace(lexemeType::If);
-
-            generator.emplace(GeneratorTask::Task3);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task1);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::While:
-        {
-            magazine.emplace(lexemeType::RightBrace);
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(lexemeType::LeftBrace);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::C);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-            magazine.emplace(lexemeType::While);
-
-            generator.emplace(GeneratorTask::Task5);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task1);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task4);
-            break;
-        }
-        case lexemeType::Read:
-        {
-            magazine.emplace(lexemeType::Semicolon);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(lexemeType::VarName);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-            magazine.emplace(lexemeType::Read);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Read);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Write:
-        {
-            magazine.emplace(lexemeType::Semicolon);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-            magazine.emplace(lexemeType::Write);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Write);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Allocate:
-        {
-            magazine.emplace(lexemeType::Semicolon);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::Comma);
-            magazine.emplace(lexemeType::VarName);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-            magazine.emplace(lexemeType::Allocate);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Memory); // буква m
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
+            string msg = "Generator error; Error or unknown state;";
             throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::I:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::VarName:
-        {
-            magazine.emplace(Nonterminal::M);
-            magazine.emplace(lexemeType::VarName);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task8);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::M:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::Semicolon:
-        {
-            magazine.emplace(lexemeType::Semicolon);
-
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Comma:
-        {
-            magazine.emplace(Nonterminal::M);
-            magazine.emplace(lexemeType::VarName);
-            magazine.emplace(lexemeType::Comma);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task8);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::H:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::LeftSquareBracket:
-        {
-            magazine.emplace(lexemeType::RightSquareBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LeftSquareBracket);
-
-            generator.emplace(GeneratorTask::Index);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-        }
-        break;
-    }
-    case Nonterminal::C:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::VarName:
-        {
-            magazine.emplace(Nonterminal::L);
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(lexemeType::VarName);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            break;
-        }
-        case lexemeType::IntNum:
-        {
-            magazine.emplace(Nonterminal::L);
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(lexemeType::IntNum);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::IntNumber);
-            break;
-        }
-        case lexemeType::LeftRoundBracket:
-        {
-            magazine.emplace(Nonterminal::L);
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Plus:
-        {
-            magazine.emplace(Nonterminal::L);
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Plus);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Minus:
-        {
-            magazine.emplace(Nonterminal::L);
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Minus);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::UnarMinus);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::L:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::Less:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::Less);
-
-            generator.emplace(GeneratorTask::Less);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::More:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::More);
-
-            generator.emplace(GeneratorTask::More);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Equal:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::Equal);
-
-            generator.emplace(GeneratorTask::Equal);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::LessOrEqual:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LessOrEqual);
-
-            generator.emplace(GeneratorTask::LessOrEqual);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::MoreOrEqual:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::MoreOrEqual);
-
-            generator.emplace(GeneratorTask::MoreOrEqual);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::NotEqual:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::NotEqual);
-
-            generator.emplace(GeneratorTask::NotEqual);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::K:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::Else:
-        {
-            magazine.emplace(lexemeType::RightBrace);
-            magazine.emplace(Nonterminal::Q);
-            magazine.emplace(Nonterminal::S);
-            magazine.emplace(lexemeType::LeftBrace);
-            magazine.emplace(lexemeType::Else);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Task2);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-        }
-        break;
-    }
-    case Nonterminal::E:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::VarName:
-        {
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(lexemeType::VarName);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            break;
-        }
-        case lexemeType::IntNum:
-        {
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(lexemeType::IntNum);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::IntNumber);
-            break;
-        }
-        case lexemeType::LeftRoundBracket:
-        {
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Plus:
-        {
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Plus);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Minus:
-        {
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Minus);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::UnarMinus);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::U:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::Plus:
-        {
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::T);
-            magazine.emplace(lexemeType::Plus);
-
-            generator.emplace(GeneratorTask::Plus);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Minus:
-        {
-            magazine.emplace(Nonterminal::U);
-            magazine.emplace(Nonterminal::T);
-            magazine.emplace(lexemeType::Minus);
-
-            generator.emplace(GeneratorTask::Minus);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-        }
-        break;
-    }
-    case Nonterminal::T:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::VarName:
-        {
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(lexemeType::VarName);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            break;
-        }
-        case lexemeType::IntNum:
-        {
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(lexemeType::IntNum);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::IntNumber);
-            break;
-        }
-        case lexemeType::LeftRoundBracket:
-        {
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Plus:
-        {
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Plus);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Minus:
-        {
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Minus);
-
-            generator.emplace(GeneratorTask::UnarMinus);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::V:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::Multiply:
-        {
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::F);
-            magazine.emplace(lexemeType::Multiply);
-
-            generator.emplace(GeneratorTask::Multiply);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Divide:
-        {
-            magazine.emplace(Nonterminal::V);
-            magazine.emplace(Nonterminal::F);
-            magazine.emplace(lexemeType::Divide);
-
-            generator.emplace(GeneratorTask::Divide);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-        }
-        break;
-    }
-    case Nonterminal::F:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::VarName:
-        {
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(lexemeType::VarName);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            break;
-        }
-        case lexemeType::IntNum:
-        {
-            magazine.emplace(lexemeType::IntNum);
-
-            generator.emplace(GeneratorTask::IntNumber);
-            break;
-        }
-        case lexemeType::LeftRoundBracket:
-        {
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Plus:
-        {
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Plus);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        case lexemeType::Minus:
-        {
-            magazine.emplace(Nonterminal::Z);
-            magazine.emplace(Nonterminal::G);
-            magazine.emplace(lexemeType::Minus);
-
-            generator.emplace(GeneratorTask::UnarMinus);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::G:
-    {
-        switch (current_lexeme.lexeme_type)
-        {
-        case lexemeType::VarName:
-        {
-            magazine.emplace(Nonterminal::H);
-            magazine.emplace(lexemeType::VarName);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::VariableId);
-            break;
-        }
-        case lexemeType::IntNum:
-        {
-            magazine.emplace(lexemeType::IntNum);
-
-            generator.emplace(GeneratorTask::IntNumber);
-            break;
-        }
-        case lexemeType::LeftRoundBracket:
-        {
-            magazine.emplace(lexemeType::RightRoundBracket);
-            magazine.emplace(Nonterminal::E);
-            magazine.emplace(lexemeType::LeftRoundBracket);
-
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            generator.emplace(GeneratorTask::Empty);
-            break;
-        }
-        default:
-        {
-            string msg = "Generator error; Unexpected lexeme;";
-            throw InterpretException(msg, current_lexeme.info);
-        }
-        }
-        break;
-    }
-    case Nonterminal::Z:
-    {
-        break;
-    }
-    case Nonterminal::Error:
-    default:
-        string msg = "Generator error; Error or unknown state;";
-        throw InterpretException(msg, current_lexeme.info);
     }
 }
 
@@ -1303,7 +1045,7 @@ InterData OpsGenerator::GetOpsData()
                 throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
             }
 
-            if (current_mag_item.lexeme_type == current_lexeme.lex_type)
+            if (current_mag_item.lex_type == current_lexeme.lex_type)
             {
                 if (current_lexeme.lex_type == LexemeType::Semicolon)
                 {
