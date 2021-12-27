@@ -4,8 +4,6 @@ LexAnalyzer::LexAnalyzer(const std::string& file_text)
 {
 	program_text = file_text;
 	current_file_pos = 0;
-	current_debuginfo.debug_line = 1;
-	current_debuginfo.debug_position = 1;
 }
 
 bool LexAnalyzer::IsChar(char ch) {
@@ -14,24 +12,19 @@ bool LexAnalyzer::IsChar(char ch) {
 
 std::vector<LexemeInfo> LexAnalyzer::GetLexemesData()
 {
+	DebugInfo current_debuginfo;
+	current_debuginfo.debug_line = 1;
+	current_debuginfo.debug_position = 1;
 	LexemeInfo current_lexeme;
 
 	while (current_file_pos < program_text.size())
 	{
 		if (isspace(program_text[current_file_pos])) { //skip all empty space
-			switch (program_text[current_file_pos++])
-			{
-			case ' ':
-				++current_debuginfo.debug_position;
-				break;
-			case '\n':
+			if (program_text[current_file_pos++] == '\n') {
 				current_debuginfo.debug_position = 1;
 				++current_debuginfo.debug_line;
-				break;
-			case '\t':
-				++current_debuginfo.debug_position;
-				break;
 			}
+			else ++current_debuginfo.debug_position;
 			continue;
 		}
 

@@ -59,8 +59,7 @@ private:
 	bool IsChar(char ch);
 
 	std::string program_text;
-	int current_file_pos;
-	DebugInfo current_debuginfo;
+	int current_file_pos;			//
 	std::vector<LexemeInfo> lexems_data;
 	
 public:
