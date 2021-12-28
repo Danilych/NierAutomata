@@ -60,7 +60,7 @@ void OpsGenerator::GrammNonterminal()
 
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Task10);
+                generator.emplace(GeneratorTask::Empty);
                 break;
             }
             case LexemeType::VarName:
@@ -858,10 +858,10 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(LexemeType::VarName);
 
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Task6);
-                generator.emplace(GeneratorTask::Task10);
+                generator.emplace(GeneratorTask::Memory);
                 generator.emplace(GeneratorTask::IntNumber);
                 generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Task10);
                 break;
             }
             default:
@@ -885,11 +885,18 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(LexemeType::VarName);
                 magazine.emplace(LexemeType::Comma);
 
-                generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Task6);
                 generator.emplace(GeneratorTask::Task10);
                 generator.emplace(GeneratorTask::IntNumber);
                 generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                break;
+            }
+            case LexemeType::Semicolon:
+            {
+                magazine.emplace(LexemeType::Semicolon);
+
                 generator.emplace(GeneratorTask::Empty);
                 break;
             }
@@ -911,7 +918,7 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::E);
                 magazine.emplace(LexemeType::LeftSquareBracket);
 
-                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Index);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
                 break;
@@ -1029,9 +1036,10 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::E);
                 magazine.emplace(LexemeType::LessOrEqual);
 
-                generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::LessOrEqual);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                
                 break;
             }
             case LexemeType::MoreOrEqual:
@@ -1040,9 +1048,10 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::E);
                 magazine.emplace(LexemeType::MoreOrEqual);
 
-                generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::MoreOrEqual);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                
                 break;
             }
             case LexemeType::Equal:
@@ -1051,9 +1060,10 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::E);
                 magazine.emplace(LexemeType::Equal);
 
-                generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Equal);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                
                 break;
             }
             case LexemeType::Less:
@@ -1062,9 +1072,10 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::E);
                 magazine.emplace(LexemeType::Less);
 
-                generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Less);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                
                 break;
             }
             case LexemeType::More:
@@ -1073,9 +1084,10 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::E);
                 magazine.emplace(LexemeType::More);
 
-                generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::More);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                
                 break;
             }
             default:
@@ -1724,16 +1736,8 @@ void OpsGenerator::DoTask()
     }
     case GeneratorTask::Task10: //array
     {
-        //current_table = vartable::Int;
-        is_array = true;
-        // current_table = table::MassInt;
-        break;
-    }
-    case GeneratorTask::Task11: //const
-    {
-        ///////////////////////////////
         std::string var_name = current_lexeme.lex_value;
-        is_constant = true;
+        is_array = true;
         switch (current_table)
         {
         case vartable::Int:
@@ -1748,22 +1752,9 @@ void OpsGenerator::DoTask()
             {
                 if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
                 {
-                    if (is_constant)
-                    {
-                        interdata.int_table.insert({ var_name, 0 });
-                        interdata.constid_table.push_back(var_name);
-                        names_table.push_back(var_name);
-                    }
-                    else if (is_array)
-                    {
-                        interdata.massInt_table.insert({ var_name, std::vector<int>(0) });
-                        names_table.push_back(var_name);
-                    }
-                    else
-                    {
-                        interdata.int_table.insert({ var_name, 0 });
-                        names_table.push_back(var_name);
-                    }
+
+                    interdata.massInt_table.insert({ var_name, std::vector<int>(0) });
+                    names_table.push_back(var_name);
                 }
                 else
                 {
@@ -1784,22 +1775,90 @@ void OpsGenerator::DoTask()
             {
                 if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
                 {
-                    if (is_constant)
-                    {
-                        interdata.float_table.insert({ var_name, 0 });
-                        interdata.constid_table.push_back(var_name);
-                        names_table.push_back(var_name);
-                    }
-                    else if (is_array)
-                    {
-                        interdata.massFloat_table.insert({ var_name, std::vector<float>(0) });
-                        names_table.push_back(var_name);
-                    }
-                    else
-                    {
-                        interdata.float_table.insert({ var_name, 0 });
-                        names_table.push_back(var_name);
-                    }
+                    interdata.massFloat_table.insert({ var_name, std::vector<float>(0) });
+                    names_table.push_back(var_name);
+                }
+                else
+                {
+                    std::string errormsg = "Ops Generator error - Redefine a variable name = '" + var_name + "';";
+                    throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+                }
+            }
+            break;
+        }
+        case vartable::String:
+        {
+           
+            std::string errormsg = "Ops Generator error - String can't be an array = '" + var_name + "';";
+            throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+        }
+        }
+
+        if (interdata.int_table.count(var_name) ||
+            interdata.massInt_table.count(var_name))
+        {
+            interdata.ops_item.emplace_back(var_name, OpsItemType::IntVar, current_lexeme.lex_debuginfo);
+        }
+        else if (interdata.float_table.count(var_name) ||
+            interdata.massFloat_table.count(var_name))
+        {
+            interdata.ops_item.emplace_back(var_name, OpsItemType::FloatVar, current_lexeme.lex_debuginfo);
+        }
+        else
+        {
+            std::string errormsg = "OpsGenerator error - Unknown variable name = '" + var_name + "';";
+            throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+        }
+        break;
+        //current_table = vartable::Int;
+        //is_array = true;
+        // current_table = table::MassInt;
+    }
+    case GeneratorTask::Task11: //const
+    {
+        ///////////////////////////////
+        std::string var_name = current_lexeme.lex_value;
+        is_constant = true;
+        switch (current_table)
+        {
+        case vartable::Int:
+        {
+
+            if (is_constant && is_array)
+            {
+                std::string errormsg = "Ops Generator error - Constant can't be an array = '" + var_name + "';";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            else
+            {
+                if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
+                {
+                    interdata.int_table.insert({ var_name, 0 });
+                    interdata.constid_table.push_back(var_name);
+                    names_table.push_back(var_name);
+                }
+                else
+                {
+                    std::string errormsg = "Ops Generator error - Redefine a variable name = '" + var_name + "';";
+                    throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+                }
+            }
+            break;
+        }
+        case vartable::Float:
+        {
+            if (is_constant && is_array)
+            {
+                std::string errormsg = "Ops Generator error - Constant can't be an array = '" + var_name + "';";
+                throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
+            }
+            else
+            {
+                if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
+                {              
+                    interdata.float_table.insert({ var_name, 0 });
+                    interdata.constid_table.push_back(var_name);
+                    names_table.push_back(var_name);
                 }
                 else
                 {
@@ -1820,22 +1879,9 @@ void OpsGenerator::DoTask()
             {
                 if (std::count(names_table.begin(), names_table.end(), var_name) == 0)
                 {
-                    if (is_constant)
-                    {
-                        interdata.string_table.insert({ var_name, "" });
-                        interdata.constid_table.push_back(var_name);
-                        names_table.push_back(var_name);
-                    }
-                    else if (is_array)
-                    {
-                        std::string errormsg = "Ops Generator error - String can't be an array = '" + var_name + "';";
-                        throw InterDebug(errormsg, current_lexeme.lex_debuginfo);
-                    }
-                    else
-                    {
-                        interdata.string_table.insert({ var_name, "" });
-                        names_table.push_back(var_name);
-                    }
+                    interdata.string_table.insert({ var_name, "" });
+                    interdata.constid_table.push_back(var_name);
+                    names_table.push_back(var_name);
                 }
                 else
                 {
