@@ -148,6 +148,7 @@ private:
 		Less,
 		Assign,
 		Memory,
+		Resize,
 		More,
 		Equal,
 		LessOrEqual,

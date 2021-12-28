@@ -159,7 +159,7 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::P);
                 magazine.emplace(LexemeType::Semicolon);
                 magazine.emplace(Nonterminal::C);
-                magazine.emplace(LexemeType::Semicolon);
+                //magazine.emplace(LexemeType::Semicolon);
                 magazine.emplace(Nonterminal::P);
                 magazine.emplace(LexemeType::LeftRoundBracket);
                 magazine.emplace(LexemeType::For);
@@ -172,7 +172,7 @@ void OpsGenerator::GrammNonterminal()
                 generator.emplace(GeneratorTask::Task1);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Empty);
+                //generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Task4);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
@@ -228,7 +228,7 @@ void OpsGenerator::GrammNonterminal()
 
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Memory);
+                generator.emplace(GeneratorTask::Resize);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::VariableId);
@@ -379,7 +379,7 @@ void OpsGenerator::GrammNonterminal()
                     magazine.emplace(Nonterminal::P);
                     magazine.emplace(LexemeType::Semicolon);
                     magazine.emplace(Nonterminal::C);
-                    magazine.emplace(LexemeType::Semicolon);
+                   // magazine.emplace(LexemeType::Semicolon);
                     magazine.emplace(Nonterminal::P);
                     magazine.emplace(LexemeType::LeftRoundBracket);
                     magazine.emplace(LexemeType::For);
@@ -392,7 +392,7 @@ void OpsGenerator::GrammNonterminal()
                     generator.emplace(GeneratorTask::Task1);
                     generator.emplace(GeneratorTask::Empty);
                     generator.emplace(GeneratorTask::Empty);
-                    generator.emplace(GeneratorTask::Empty);
+                   // generator.emplace(GeneratorTask::Empty);
                     generator.emplace(GeneratorTask::Task4);
                     generator.emplace(GeneratorTask::Empty);
                     generator.emplace(GeneratorTask::Empty);
@@ -448,7 +448,7 @@ void OpsGenerator::GrammNonterminal()
 
                     generator.emplace(GeneratorTask::Empty);
                     generator.emplace(GeneratorTask::Empty);
-                    generator.emplace(GeneratorTask::Memory);
+                    generator.emplace(GeneratorTask::Resize);
                     generator.emplace(GeneratorTask::Empty);
                     generator.emplace(GeneratorTask::Empty);
                     generator.emplace(GeneratorTask::VariableId);
@@ -554,7 +554,7 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(Nonterminal::P);
                 magazine.emplace(LexemeType::Semicolon);
                 magazine.emplace(Nonterminal::C);
-                magazine.emplace(LexemeType::Semicolon);
+                //magazine.emplace(LexemeType::Semicolon);
                 magazine.emplace(Nonterminal::P);
                 magazine.emplace(LexemeType::LeftRoundBracket);
                 magazine.emplace(LexemeType::For);
@@ -566,7 +566,7 @@ void OpsGenerator::GrammNonterminal()
                 generator.emplace(GeneratorTask::Task1);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Empty);
+               // generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Task4);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
@@ -616,7 +616,7 @@ void OpsGenerator::GrammNonterminal()
                 magazine.emplace(LexemeType::Resize);
 
                 generator.emplace(GeneratorTask::Empty);
-                generator.emplace(GeneratorTask::Memory);
+                generator.emplace(GeneratorTask::Resize);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::VariableId);
@@ -777,11 +777,13 @@ void OpsGenerator::GrammNonterminal()
             {
             case LexemeType::VarName:
             {
+                magazine.emplace(LexemeType::Semicolon);
                 magazine.emplace(Nonterminal::E);
                 magazine.emplace(LexemeType::Assign);
                 magazine.emplace(LexemeType::VarName);
 
                 generator.emplace(GeneratorTask::Assign);
+                generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::Empty);
                 generator.emplace(GeneratorTask::VariableId);
                 break;
@@ -1922,6 +1924,11 @@ void OpsGenerator::DoTask()
     case GeneratorTask::Memory:
     {
         interdata.ops_item.emplace_back(OpsItemOperation::Memory, current_lexeme.lex_debuginfo);
+        break;
+    }
+    case GeneratorTask::Resize:
+    {
+        interdata.ops_item.emplace_back(OpsItemOperation::Resize, current_lexeme.lex_debuginfo);
         break;
     }
     default: {

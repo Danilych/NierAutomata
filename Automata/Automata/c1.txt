@@ -1,18 +1,26 @@
 int n, i, Sum, Average;
+float g;
+const string ss = "====";
 array int arr[5];
-read(n);                 
-i = 0;
-Average = 0;
-Sum = 0;
-while(i < n) {                    
-    read(arr[i]);                 
-    i = i + 1;                    
-}
-i = 0;
-while (i < n){
-    Sum = Sum + arr[i];
-    i = i + 1;
-}
-Average = Sum / n;
-write(Average);   
 
+g = 0;
+
+for(i = 0; i<5; i = i + 1;)
+{
+arr[i-1] = i-1;
+write(arr[i-1]);
+g = g + arr[i-1];
+}
+
+write(g);
+read(i);
+
+write(g/i);
+
+resize(arr, 10);
+write(ss);  
+for(i = 0; i<10; i = i + 1;)
+{
+arr[i-1] = i-1;
+write(arr[i-1]);
+}

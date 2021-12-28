@@ -1,17 +1,23 @@
-int n, i, Sum, Average;
-array int arr[5];
+int n, i, Sum, Some;
+array int arr[10];
 read(n);
-i = 5 * (10+10);
-Average = 0;
+i = 5 * ( 10 + 10 );
+
 Sum = 0;
-while(i < n) {                    
-    read(arr[i]);                 
+i = 0;
+while(i < n) 
+{      
+    arr[i] = i; 
+    write(arr[i]);                    
     i = i + 1;                    
 }
+read(Some);
 i = 0;
 while (i < n){
     Sum = Sum + arr[i];
     i = i + 1;
 }
-Average = Sum / n;
-write(Average);   
+write(Sum);
+Some= Sum / n;
+write(Some);
+

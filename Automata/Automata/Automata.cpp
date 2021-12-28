@@ -4,6 +4,7 @@
 #include<string>
 #include "LexAnalyzer.h"
 #include "OpsGenerator.h"
+#include "OpsInterpret.h"
 
 
 int main()     
@@ -72,8 +73,11 @@ int main()
              i++;
          }
 
-        //std::cout << std::endl <<"Your lexemes: \n\n";
+        std::cout << std::endl <<"Ops interpretating: \n\n";
 
+        OpsInterpret MyOpsInt(OpsData);
+        MyOpsInt.AnalyzeOps();
+        
         //for (auto& Lexeme : LexemesBuffer) // access by reference to avoid copying
         //{
         //    if(Lexeme.lex_type == LexemeType::Finish) std::cout <<"Finish" << std::endl;
