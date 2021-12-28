@@ -31,7 +31,7 @@ int main()
 
         std::cout << std::endl <<"Your ops: \n\n";
         int i = 0;
-         for (auto& Opsi : MyOps) // access by reference to avoid copying
+         for (auto& Opsi : MyOps)
          {
              switch (Opsi.Ops_type)
              {
