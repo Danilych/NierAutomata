@@ -1,5 +1,6 @@
 int n, i, Sum, Some;
 array int arr[10];
+write("Starting c2");
 read(n);
 i = 5 * ( 10 + 10 );
 
@@ -20,4 +21,5 @@ while (i < n){
 write(Sum);
 Some= Sum / n;
 write(Some);
+
 

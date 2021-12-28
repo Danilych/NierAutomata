@@ -1185,6 +1185,17 @@ void OpsGenerator::GrammNonterminal()
                 generator.emplace(GeneratorTask::FloatNumber);
                 break;
             }
+            case LexemeType::StringVal:
+            {
+                magazine.emplace(Nonterminal::U);
+                magazine.emplace(Nonterminal::V);
+                magazine.emplace(LexemeType::StringVal);
+
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::Empty);
+                generator.emplace(GeneratorTask::StringVal);
+                break;
+            }
             case LexemeType::LeftRoundBracket:
             {
                 magazine.emplace(Nonterminal::U);
