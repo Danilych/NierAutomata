@@ -71,12 +71,17 @@ void OpsInterpret::AnalyzeOps()
 				auto a = magazine.top();
 				magazine.pop();
 
+				check_constant(a, const_init_flag);
+
 				std::string input;
 				std::cin >> input;
 
-				if (is_int(input)) SetInt(a, std::stoi(input));
-				else if (is_float(input)) SetFloat(a, std::stof(input));
-				else SetString(a, input);
+				switch (a.Ops_type)
+				{
+				case OpsItemType::FloatVar: SetFloat(a, std::stof(input)); break;
+				case OpsItemType::IntVar: SetInt(a, std::stoi(input)); break;
+				case OpsItemType::StringVar: SetString(a, input); break;
+				}
 				break;
 			}
 			case OpsItemOperation::Write:
@@ -604,7 +609,7 @@ void OpsInterpret::SetInt(OpsItem& ops_item, int num)
 	}
 }
 
-bool OpsInterpret::check_constant_for_assign(OpsItem& a, std::map<std::string, int> const_flags)
+bool OpsInterpret::check_constant_for_assign(OpsItem& a, std::map<std::string, int>& const_flags)
 {
 	if (const_flags.count(a.variable_name))
 	{
@@ -619,8 +624,9 @@ bool OpsInterpret::check_constant_for_assign(OpsItem& a, std::map<std::string, i
 			throw InterDebug(errormsg, a.debuginfo);
 		}
 	}
-	else
+	else 
 		return true;
+
 	return false;
 }
 
@@ -639,6 +645,26 @@ void OpsInterpret::SetFloat(OpsItem& ops_item, float num)
 		std::string errormsg = "Interpreter error - float variable was expected;";
 		throw InterDebug(errormsg, ops_item.debuginfo);
 	}
+}
+
+bool OpsInterpret::check_constant(OpsItem& a, std::map<std::string, int>& const_flags)
+{
+	if (const_flags.count(a.variable_name))
+	{
+		if (const_flags[a.variable_name] == 0)
+		{
+			const_flags[a.variable_name] = 1;
+			return true;
+		}
+		else
+		{
+			std::string errormsg = "Interpreter error - constant can't be changed after init;";
+			throw InterDebug(errormsg, a.debuginfo);
+		}
+	}
+	else
+		return true;
+	return false;
 }
 
 void OpsInterpret::SetString(OpsItem& ops_item, std::string str)

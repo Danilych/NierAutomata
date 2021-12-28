@@ -10,7 +10,8 @@ private:
 	bool is_int(const std::string& input);
 	bool is_float(std::string input);
 	bool check_is_string(OpsItem& a, OpsItem& b, bool assign_check);
-	bool check_constant_for_assign(OpsItem& a, std::map<std::string, int> const_flags);
+	bool check_constant_for_assign(OpsItem& a, std::map<std::string, int>& const_flags);
+	bool check_constant(OpsItem& a, std::map<std::string, int>& const_flags);
 
 	void SetInt(OpsItem& ops_item, int num);
 	void SetFloat(OpsItem& ops_item, float num);
